@@ -5,7 +5,7 @@ on:
 
 jobs:
   push:
-    name: "cs-ptero:latest"
+    name: "exagear:latest"
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
