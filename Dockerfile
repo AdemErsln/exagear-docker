@@ -15,6 +15,13 @@ RUN curl https://dl.insrt.uk/mirror/exagear/patch.sh | bash
 
 RUN apt-get update && apt-get upgrade -y
 
+USER container
+ENV  USER container
+ENV HOME /home/container
+
+WORKDIR /home/container
+COPY ./entrypoint.sh /entrypoint.sh
 
 
-RUN ["bin/bash" , "/home/container/start.sh"]
+CMD ["/bin/ash", "/entrypoint.sh"]
+
