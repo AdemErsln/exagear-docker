@@ -14,3 +14,7 @@ RUN dpkg -i exagear-guest*.deb
 RUN curl https://dl.insrt.uk/mirror/exagear/patch.sh | bash
 
 RUN apt-get update && apt-get upgrade -y
+
+
+
+RUN ["bin/bash" , "/home/container/start.sh"]
