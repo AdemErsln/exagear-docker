@@ -1,6 +1,6 @@
 FROM ubuntu:latest
 
-RUN apt-get update && apt-get install -y bash coreutils findutils curl binfmt-support cron wget
+RUN apt-get update && apt-get install -y bash coreutils findutils curl binfmt-support cron wget git
 
 RUN mkdir ~/exagear
 WORKDIR ~/exagear
