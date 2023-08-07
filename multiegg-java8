@@ -15,3 +15,16 @@ RUN curl https://dl.insrt.uk/mirror/exagear/patch.sh | bash
 
 RUN apt-get update && apt-get upgrade -y
 RUN apt-get update && apt-get install -y wine
+
+# OpenJDK 8 kurulumu
+RUN apt-get update && apt-get install -y openjdk-8-jdk
+
+USER container
+ENV  USER container
+ENV HOME /home/container
+
+WORKDIR /home/container
+COPY ./entrypoint.sh /entrypoint.sh
+
+
+CMD ["/bin/bash", "/entrypoint.sh"]
