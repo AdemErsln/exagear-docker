@@ -1,11 +1,11 @@
-name: Exagear-Arm64-dev
+name: multiegg-arm64
 
 on:
   workflow_dispatch:
 
 jobs:
   push:
-    name: "exagear:latest"
+    name: "multiegg:java8"
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
