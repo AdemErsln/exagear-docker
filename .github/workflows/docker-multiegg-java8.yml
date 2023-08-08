@@ -1,4 +1,4 @@
-name: multiegg-arm64
+name: multiegg-arm64-java8
 
 on:
   workflow_dispatch:
