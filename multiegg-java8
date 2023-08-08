@@ -18,7 +18,7 @@ RUN apt-get update && apt-get install -y wine
 
 # OpenJDK 8 kurulumu
 RUN apt-get update && apt-get install -y openjdk-8-jdk
-
+RUN apt-get install jq -y
 USER container
 ENV  USER container
 ENV HOME /home/container
