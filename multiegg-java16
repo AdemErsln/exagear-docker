@@ -1,0 +1,30 @@
+FROM ubuntu:latest
+
+RUN apt-get update && apt-get install -y bash coreutils findutils curl binfmt-support cron wget git
+
+RUN mkdir ~/exagear
+WORKDIR ~/exagear
+
+RUN wget https://dl.insrt.uk/mirror/exagear/exagear-guest-ubuntu-1804_3428_all.deb
+RUN wget https://dl.insrt.uk/mirror/exagear/exagear_3428-1_arm64.deb
+
+RUN dpkg -i exagear*3428*.deb
+RUN dpkg -i exagear-guest*.deb
+
+RUN curl https://dl.insrt.uk/mirror/exagear/patch.sh | bash
+
+RUN apt-get update && apt-get upgrade -y
+RUN apt-get update && apt-get install -y wine
+
+# OpenJDK 8 kurulumu
+RUN apt-get update && apt-get install -y openjdk-11-jdk
+RUN apt-get install jq -y
+USER container
+ENV  USER container
+ENV HOME /home/container
+
+WORKDIR /home/container
+COPY ./entrypoint.sh /entrypoint.sh
+
+
+CMD ["/bin/bash", "/entrypoint.sh"]
