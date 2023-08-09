@@ -1,7 +1,9 @@
 FROM ubuntu:latest
 
-RUN apt-get update && apt-get install -y bash coreutils findutils curl binfmt-support cron wget git 
-RUN apt-get install -y python3 nodejs unzip lib32gcc1 ca-certificates
+RUN apt-get update && apt-get install -y bash coreutils findutils curl binfmt-support cron wget git python3 nodejs unzip ca-certificates
+RUN dpkg --add-architecture i386 && \
+    apt-get update && \
+    apt-get install -y lib32gcc1
 RUN mkdir ~/exagear
 WORKDIR ~/exagear
 
