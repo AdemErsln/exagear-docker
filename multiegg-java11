@@ -3,7 +3,8 @@ FROM ubuntu:latest
 RUN apt-get update && apt-get install -y bash coreutils findutils curl binfmt-support cron wget git python3 nodejs unzip ca-certificates
 RUN dpkg --add-architecture i386 && \
     apt-get update && \
-    apt-get install -y lib32gcc1
+    apt-get install -y lib32ncursesw5 libncursesw5 libreadline5
+
 RUN mkdir ~/exagear
 WORKDIR ~/exagear
 
