@@ -1,0 +1,18 @@
+# Ubuntu tabanlı bir Docker imajı kullanalım
+FROM ubuntu:latest
+
+# Gerekli paketleri kurulumunu yapalım
+RUN apt-get update && \
+    apt-get install -y curl python3 && \
+    rm -rf /var/lib/apt/lists/*
+
+# Çalışma dizinini ayarlayalım
+WORKDIR /tmp
+
+# InstallFEX.py dosyasını indir, çalıştır ve temizle
+RUN curl --silent https://raw.githubusercontent.com/FEX-Emu/FEX/main/Scripts/InstallFEX.py --output InstallFEX.py && \
+    python3 InstallFEX.py && \
+    rm InstallFEX.py
+
+# Docker içinde çalışacak komutları belirleyelim
+CMD ["bash"]
