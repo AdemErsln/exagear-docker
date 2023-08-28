@@ -1,5 +1,5 @@
-FROM php:8.0-fpm-alpine
 FROM ubuntu:latest
+FROM php:8.0-fpm-alpine
 
 
 RUN apt-get update
