@@ -1,5 +1,6 @@
 FROM ubuntu:latest
 
+RUN sudo apt-get update
 RUN apt-get install -y software-properties-common
 RUN add-apt-repository ppa:ondrej/php
 
