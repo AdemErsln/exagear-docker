@@ -1,4 +1,6 @@
+FROM php:8.0-fpm-alpine
 FROM ubuntu:latest
+
 
 RUN apt-get update
 RUN apt-get install -y software-properties-common
