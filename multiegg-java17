@@ -1,5 +1,6 @@
 FROM ubuntu:latest
 
+RUN apt-get install -y software-properties-common
 RUN add-apt-repository ppa:ondrej/php
 
 RUN apt-get update && apt-get install -y bash coreutils findutils curl binfmt-support cron wget git python3 nodejs unzip ca-certificates  libncursesw5
