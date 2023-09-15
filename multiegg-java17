@@ -4,6 +4,8 @@ FROM ubuntu:latest
 RUN apt-get update
 
 
+RUN curl -sLhttps://deb.nodesource.com/setup_19.x | bash -
+
 RUN apt-get update && apt-get install -y bash coreutils findutils curl binfmt-support cron wget git python3 nodejs npm unzip ca-certificates  libncursesw5 pip
 
 RUN mkdir ~/exagear
