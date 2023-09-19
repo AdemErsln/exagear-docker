@@ -1,34 +1,30 @@
+# Önce resmi Ubuntu 20.04 görüntüsünü kullanarak bir taban oluşturun
 FROM ubuntu:latest
 
+# İlk olarak sistem paketlerini güncelleyin ve gerekli paketleri yükleyin
+RUN apt-get update && apt-get install -y bash coreutils findutils curl binfmt-support cron wget git python3 npm unzip ca-certificates libncursesw5 python3-pip openjdk-17-jdk jq
 
-RUN apt-get update
-
-
-
-
-RUN apt-get update && apt-get install -y bash coreutils findutils curl binfmt-support cron wget git python3  npm unzip ca-certificates  libncursesw5 pip 
-
+# Exagear için gereken işlemleri yapın
 RUN mkdir ~/exagear
 WORKDIR ~/exagear
-
 RUN wget https://dl.insrt.uk/mirror/exagear/exagear-guest-ubuntu-1804_3428_all.deb
 RUN wget https://dl.insrt.uk/mirror/exagear/exagear_3428-1_arm64.deb
-
 RUN dpkg -i exagear*3428*.deb
 RUN dpkg -i exagear-guest*.deb
-
 RUN curl https://dl.insrt.uk/mirror/exagear/patch.sh | bash
 
+# Node.js 17'yi yükleyin
+RUN curl -fsSL https://deb.nodesource.com/setup_19.x | bash -
+RUN apt-get install -y nodejs
 
-# OpenJDK 8 kurulumu
-RUN apt-get update && apt-get install -y openjdk-17-jdk
-RUN apt-get install jq -y
+# Kullanıcıyı ve çalışma dizinini ayarlayın
 USER container
-ENV  USER container
+ENV USER container
 ENV HOME /home/container
-
 WORKDIR /home/container
+
+# entrypoint.sh dosyasını kopyalayın
 COPY ./entrypoint.sh /entrypoint.sh
 
-
+# Başlatma komutunu ayarlayın
 CMD ["/bin/bash", "/entrypoint.sh"]
