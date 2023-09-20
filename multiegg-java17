@@ -13,9 +13,9 @@ RUN dpkg -i exagear*3428*.deb
 RUN dpkg -i exagear-guest*.deb
 RUN curl https://dl.insrt.uk/mirror/exagear/patch.sh | bash
 
-# Node.js 17'yi yükleyin
-RUN curl -fsSL https://deb.nodesource.com/setup_19.x | bash -
-RUN apt-get install -y nodejs
+
+RUN rm /bin/node
+RUN rm /bin/npm
 
 # Kullanıcıyı ve çalışma dizinini ayarlayın
 USER container
