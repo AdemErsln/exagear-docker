@@ -24,7 +24,7 @@ ENV  USER container
 ENV HOME /home/container
 
 WORKDIR /home/container
-COPY ./entrypoint.sh /entrypoint.sh
+COPY ./minecraft.sh /minecraft.sh
 
 
-CMD ["/bin/bash", "/entrypoint.sh"]
+CMD ["/bin/bash", "/minecraft.sh"]
