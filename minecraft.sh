@@ -1343,31 +1343,38 @@ then
                 SERVER_JARFILE=server.jar
               
 BUILD_NUMBER=latest
-echo -e "What version would you like to install?"
-echo -e Supported versions: $(curl  --silent https://papermc.io/api/v1/paper | jq  -r '{"versions"} | .versions | .[]')
-read -p "Version: " MINECRAFT_VERSION
 
-curl -o ${SERVER_JARFILE} https://papermc.io/api/v1/paper/${MINECRAFT_VERSION}/${BUILD_NUMBER}/download
 
-if [ ! -f server.properties ]; then
-    echo -e "Downloading MC server.properties"
-    curl -o server.properties https://raw.githubusercontent.com/flaxeneel2/pterodactyl-optimized-paper-egg/main/server.properties
+PROJECT="paper"
+printf "Supported versions: $(curl -s https://papermc.io/api/v2/projects/${PROJECT} | jq -r '.versions' | jq -r '.[]')"
+read -p "Version: " MINECRAFT_VERSION </dev/tty
+SERVER_JARFILE="server.jar"
+
+VER_EXISTS=`curl https://papermc.io/api/v2/projects/${PROJECT} | jq -r --arg VERSION "$MINECRAFT_VERSION" '.versions[] | contains($VERSION)' | grep true`
+LATEST_VERSION=`curl -s https://papermc.io/api/v2/projects/${PROJECT} | jq -r '.versions' | jq -r '.[-1]'`
+
+if [ "${VER_EXISTS}" = "true" ]; then
+	echo "Version is valid. Using version ${MINECRAFT_VERSION}"
+else
+	echo "Using the latest ${PROJECT} version"
+	MINECRAFT_VERSION=${LATEST_VERSION}
 fi
 
-if [ ! -f paper.yml ]; then
-    echo -e "Downloading MC paper.yml"
-    curl -o paper.yml https://raw.githubusercontent.com/flaxeneel2/pterodactyl-optimized-paper-egg/main/paper.yml
+BUILD_EXISTS=`curl -s https://papermc.io/api/v2/projects/${PROJECT}/versions/${MINECRAFT_VERSION} | jq -r --arg BUILD "${BUILD_NUMBER}" '.builds[] | tostring | contains("$BUILD")' | grep true`
+LATEST_BUILD=`curl -s https://papermc.io/api/v2/projects/${PROJECT}/versions/${MINECRAFT_VERSION} | jq -r '.builds' | jq -r '.[-1]'`
+
+if [ "${BUILD_EXISTS}" = "true" ]; then
+	echo "Build is valid for version ${MINECRAFT_VERSION}. Using build ${BUILD_NUMBER}"
+else
+	echo "Using the latest ${PROJECT} build for version ${MINECRAFT_VERSION}"
+	BUILD_NUMBER=${LATEST_BUILD}
 fi
 
-if [ ! -f spigot.yml ]; then
-    echo -e "Downloading MC spigot.yml"
-    curl -o spigot.yml https://raw.githubusercontent.com/flaxeneel2/pterodactyl-optimized-paper-egg/main/spigot.yml
-fi
+JAR_NAME=${PROJECT}-${MINECRAFT_VERSION}-${BUILD_NUMBER}.jar
+DOWNLOAD_URL=https://papermc.io/api/v2/projects/${PROJECT}/versions/${MINECRAFT_VERSION}/builds/${BUILD_NUMBER}/downloads/${JAR_NAME}
 
-if [ ! -f bukkit.yml ]; then
-    echo -e "Downloading MC bukkit.yml"
-    curl -o bukkit.yml https://raw.githubusercontent.com/flaxeneel2/pterodactyl-optimized-paper-egg/main/bukkit.yml
-fi
+curl -o ${SERVER_JARFILE} ${DOWNLOAD_URL}
+
 
 				break 
                 ;;                                                                    
