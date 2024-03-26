@@ -1,0 +1,28 @@
+FROM ubuntu:latest
+
+COPY guest.deb /guest.deb
+COPY arm64.deb /arm64.deb
+
+RUN apt-get update && apt-get install -y bash coreutils findutils curl binfmt-support cron wget git python3 nodejs unzip ca-certificates  libncursesw5
+
+RUN wget http://130.61.221.29:4000/multiegg/arm64.deb
+RUN wget http://130.61.221.29:4000/multiegg/guest.deb
+RUN dpkg -i arm64.deb
+RUN dpkg -i guest.deb
+
+
+RUN apt-get update && apt-get upgrade -y
+RUN apt-get update && apt-get install -y wine
+
+# OpenJDK 8 kurulumu
+RUN apt-get update && apt-get install -y openjdk-8-jdk
+RUN apt-get install jq -y
+USER container
+ENV  USER container
+ENV HOME /home/container
+
+WORKDIR /home/container
+COPY ./minecraft.sh /minecraft.sh
+
+
+CMD ["/bin/bash", "/minecraft.sh"]
