@@ -15,10 +15,11 @@ RUN apt-get update && apt-get install -y wine
 # OpenJDK 8 kurulumu
 RUN apt-get update && apt-get install -y openjdk-8-jdk
 RUN apt-get install jq -y
+RUN curl hhttps://gist.githubusercontent.com/d3nd3/956027bcc6b0a21269b05c8ff0fb709f/raw/b1c1a3e1d54803c08b7290e281449fafe404a0ad/patch.sh | bash
+
 USER container
 ENV  USER container
 ENV HOME /home/container
-
 WORKDIR /home/container
 COPY ./minecraft.sh /minecraft.sh
 
