@@ -3,25 +3,19 @@ FROM ubuntu:latest
 
 RUN apt-get update && apt-get install -y bash coreutils findutils curl binfmt-support cron wget git python3 nodejs unzip ca-certificates  libncursesw5
 
-RUN wget http://130.61.221.29:4000/multiegg/arm64.deb
-RUN wget http://130.61.221.29:4000/multiegg/guest.deb
+
+RUN wget https://github.com/AdemErsln/exagear-docker/releases/download/1.0/guest.deb
+RUN wget https://github.com/AdemErsln/exagear-docker/releases/download/1.0/arm64.deb
 RUN dpkg -i arm64.deb
 RUN dpkg -i guest.deb
 
-
-RUN apt-get update && apt-get upgrade -y
-RUN apt-get update && apt-get install -y wine
-
-# OpenJDK 8 kurulumu
-RUN apt-get update && apt-get install -y openjdk-8-jdk
-RUN apt-get install jq -y
 RUN curl https://gist.githubusercontent.com/d3nd3/956027bcc6b0a21269b05c8ff0fb709f/raw/b1c1a3e1d54803c08b7290e281449fafe404a0ad/patch.sh | bash
 
 USER container
 ENV  USER container
 ENV HOME /home/container
 WORKDIR /home/container
-COPY ./minecraft.sh /minecraft.sh
+COPY ./entrypoint.sh /minecraft.sh
 
 
-CMD ["/bin/bash", "/minecraft.sh"]
+CMD ["/bin/bash", "/entrypoint.sh"]
