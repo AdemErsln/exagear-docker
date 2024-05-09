@@ -1,7 +1,7 @@
 FROM ubuntu:latest
 
 
-RUN apt-get update && apt-get install -y bash coreutils findutils curl binfmt-support cron wget git python3 nodejs unzip ca-certificates 
+RUN apt-get update && apt-get install -y bash coreutils findutils curl binfmt-support cron wget git unzip ca-certificates 
 
 
 RUN wget https://github.com/AdemErsln/exagear-docker/releases/download/1.0/guest.deb
