@@ -41,6 +41,6 @@ WORKDIR /home/container
 
 # Kullanıcıyı değiştirin
 USER container
-
+COPY ./entrypoint.sh /entrypoint.sh
 # Exagear'ı başlatmak için gerekli komutları buraya ekleyin
 CMD ["/bin/bash", "/entrypoint.sh"]
