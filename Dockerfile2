@@ -43,4 +43,4 @@ WORKDIR /home/container
 USER container
 
 # Exagear'ı başlatmak için gerekli komutları buraya ekleyin
-CMD ["bin/bash"]
+CMD ["/bin/bash", "/entrypoint.sh"]
