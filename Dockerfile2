@@ -38,4 +38,4 @@ USER exagearuser
 WORKDIR /home/container
 
 # Exagear'ı başlatmak için gerekli komutları buraya ekleyin
-CMD ["exagear"]
+CMD ["bin/bash"]
