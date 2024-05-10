@@ -37,4 +37,4 @@ USER exagearuser
 WORKDIR /home/exagear
 
 # Exagear'ı başlatmak için gerekli komutları buraya ekleyin
-CMD ["/path/to/exagear/executable"]
+CMD ["exagear"]
