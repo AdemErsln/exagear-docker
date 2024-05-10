@@ -1,21 +1,40 @@
+#FROM ubuntu:latest
+
+
+#RUN apt-get update && apt-get install -y bash coreutils findutils curl binfmt-support cron wget git unzip ca-certificates 
+
+
+#RUN wget https://github.com/AdemErsln/exagear-docker/releases/download/1.0/arm64.deb
+#RUN wget https://github.com/AdemErsln/exagear-docker/releases/download/1.0/guest.deb
+#RUN dpkg -i arm64.deb
+#RUN dpkg -i guest.deb
+#RUN curl https://gist.githubusercontent.com/d3nd3/956027bcc6b0a21269b05c8ff0fb709f/raw/b1c1a3e1d54803c08b7290e281449fafe404a0ad/patch.sh | bash
+
+#USER root
+
+#ENV HOME /home/container
+#WORKDIR /home/container
+#COPY ./entrypoint.sh /entrypoint.sh
+
+
+#CMD ["/bin/bash", "/entrypoint.sh"]
+
+
 FROM ubuntu:latest
 
-
+# Exagear'ı yüklemek için gerekli paketlerin kurulumu
 RUN apt-get update && apt-get install -y bash coreutils findutils curl binfmt-support cron wget git unzip ca-certificates 
 
-
+# Exagear'ı yükleme
 RUN wget https://github.com/AdemErsln/exagear-docker/releases/download/1.0/guest.deb
 RUN wget https://github.com/AdemErsln/exagear-docker/releases/download/1.0/arm64.deb
 RUN dpkg -i arm64.deb
 RUN dpkg -i guest.deb
 
-RUN curl https://gist.githubusercontent.com/d3nd3/956027bcc6b0a21269b05c8ff0fb709f/raw/b1c1a3e1d54803c08b7290e281449fafe404a0ad/patch.sh | bash
+# Exagear'ı başlatmak için kullanılacak kullanıcı hesabını oluşturun
+RUN useradd -m -d /home/exagear exagearuser
+USER exagearuser
+WORKDIR /home/exagear
 
-USER root
-
-ENV HOME /home/container
-WORKDIR /home/container
-COPY ./entrypoint.sh /entrypoint.sh
-
-
-CMD ["/bin/bash", "/entrypoint.sh"]
+# Exagear'ı başlatmak için gerekli komutları buraya ekleyin
+CMD ["/path/to/exagear/executable"]
