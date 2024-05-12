@@ -1,31 +1,20 @@
-#FROM ubuntu:latest
-
-
-#RUN apt-get update && apt-get install -y bash coreutils findutils curl binfmt-support cron wget git unzip ca-certificates 
-
-
-#RUN wget https://github.com/AdemErsln/exagear-docker/releases/download/1.0/arm64.deb
-#RUN wget https://github.com/AdemErsln/exagear-docker/releases/download/1.0/guest.deb
-#RUN dpkg -i arm64.deb
-#RUN dpkg -i guest.deb
-#RUN curl https://gist.githubusercontent.com/d3nd3/956027bcc6b0a21269b05c8ff0fb709f/raw/b1c1a3e1d54803c08b7290e281449fafe404a0ad/patch.sh | bash
-
+FROM ubuntu
+RUN apt-get update && apt-get install -y bash coreutils findutils curl binfmt-support cron wget git unzip ca-certificat>
+RUN wget https://github.com/AdemErsln/exagear-docker/releases/download/1.0/arm64.deb
+RUN wget https://github.com/AdemErsln/exagear-docker/releases/download/1.0/guest.deb
+RUN dpkg -i arm64.deb
+RUN dpkg -i guest.deb
+RUN curl https://gist.githubusercontent.com/d3nd3/956027bcc6b0a21269b05c8ff0fb709f/raw/b1c1a3e1d54803c08b7290e281449faf>
 #USER root
 
-#ENV HOME /home/container
-#WORKDIR /home/container
-#COPY ./entrypoint.sh /entrypoint.sh
+USER root
+ENV  USER=root HOME=/home/container
 
+WORKDIR /home/container
 
-#CMD ["/bin/bash", "/entrypoint.sh"]
+ENV HOME /home/container
+WORKDIR /home/container
+COPY ./entrypoint.sh /entrypoint.sh
 
-
-FROM ubuntu:22.04
-
-RUN echo 'root:root' | chpasswd
-RUN printf '#!/bin/sh\nexit 0' > /usr/sbin/policy-rc.d
-RUN apt-get update
-RUN apt-get install -y systemd systemd-sysv dbus dbus-user-session
-RUN printf "systemctl start systemd-logind" >> /etc/profile
-
-ENTRYPOINT ["/sbin/init"]
+CMD ["/bin/bash", "/entrypoint.sh"]
+#CMD ["/bin/bash"]
