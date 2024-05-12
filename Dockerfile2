@@ -1,5 +1,5 @@
 FROM ubuntu
-RUN apt-get update && apt-get install -y bash coreutils findutils curl binfmt-support cron wget git unzip ca-certificat>
+RUN apt-get update && apt-get install -y bash coreutils findutils curl binfmt-support cron wget git unzip ca-certificates
 RUN wget https://github.com/AdemErsln/exagear-docker/releases/download/1.0/arm64.deb
 RUN wget https://github.com/AdemErsln/exagear-docker/releases/download/1.0/guest.deb
 RUN dpkg -i arm64.deb
