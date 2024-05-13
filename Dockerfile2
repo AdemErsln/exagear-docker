@@ -3,13 +3,11 @@ FROM ubuntu
 
 
 # ExaGear için çevre değişkenlerinin tanımlanması
-RUN useradd -ms /bin/bash container
-ENV HOME /home/container
-WORKDIR /home/container
+
 
 
 # Kullanıcı değiştirme
-USER container
+
 
 # Gerekli paketlerin yüklenmesi
 RUN apt-get update && apt-get install -y bash coreutils findutils curl binfmt-support cron wget git unzip ca-certificates
@@ -24,5 +22,9 @@ RUN curl https://gist.githubusercontent.com/d3nd3/956027bcc6b0a21269b05c8ff0fb70
 # Kullanıcı ve grup oluşturma
 
 COPY ./entrypoint.sh /entrypoint.sh
+RUN useradd -ms /bin/bash container
+ENV HOME /home/container
+WORKDIR /home/container
 
+USER container
 CMD ["/bin/bash", "/entrypoint.sh"]
