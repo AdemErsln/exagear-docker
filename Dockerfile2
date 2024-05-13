@@ -1,5 +1,16 @@
 FROM ubuntu
 
+
+RUN groupadd -r container && useradd -r -g container container
+
+# ExaGear için çevre değişkenlerinin tanımlanması
+ENV HOME /home/container
+WORKDIR /home/container
+
+
+# Kullanıcı değiştirme
+USER container
+
 # Gerekli paketlerin yüklenmesi
 RUN apt-get update && apt-get install -y bash coreutils findutils curl binfmt-support cron wget git unzip ca-certificates
 
@@ -11,14 +22,7 @@ RUN dpkg -i guest.deb
 RUN curl https://gist.githubusercontent.com/d3nd3/956027bcc6b0a21269b05c8ff0fb709f/raw/b1c1a3e1d54803c08b7290e281449fafe404a0ad/patch.sh | bash
 
 # Kullanıcı ve grup oluşturma
-RUN groupadd -r container && useradd -r -g container container
 
-# ExaGear için çevre değişkenlerinin tanımlanması
-ENV HOME /home/container
-WORKDIR /home/container
 COPY ./entrypoint.sh /entrypoint.sh
-
-# Kullanıcı değiştirme
-USER container
 
 CMD ["/bin/bash", "/entrypoint.sh"]
