@@ -1,7 +1,6 @@
 FROM ubuntu
 
 
-RUN groupadd -r container && useradd -r -g container container
 
 # ExaGear için çevre değişkenlerinin tanımlanması
 ENV HOME /home/container
