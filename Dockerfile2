@@ -3,6 +3,7 @@ FROM ubuntu
 
 
 # ExaGear için çevre değişkenlerinin tanımlanması
+RUN useradd -ms /bin/bash container
 ENV HOME /home/container
 WORKDIR /home/container
 
