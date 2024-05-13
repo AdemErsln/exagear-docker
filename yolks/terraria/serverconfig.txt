@@ -1,0 +1,7 @@
+worldpath=/home/container/saves/Worlds
+worldname=world
+world=/home/container/saves/Worlds/world.wld
+difficulty=0
+autocreate=1
+port=7777
+maxplayers=8

@@ -1,0 +1,62 @@
+{
+    "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO",
+    "meta": {
+        "version": "PTDL_v2",
+        "update_url": null
+    },
+    "exported_at": "2022-12-24T07:24:16-04:00",
+    "name": "\u00bb SAMP",
+    "author": "daniscript18@outlook.com",
+    "description": "SAN ANDREAS MULTIPLAYER \u2014 AMD & ARM",
+    "features": null,
+    "docker_images": {
+        "ghcr.io\/daniscript18\/yolks:samp": "ghcr.io\/daniscript18\/yolks:samp"
+    },
+    "file_denylist": [],
+    "startup": ".\/start.sh {{START_FILE}} {{CONFIG_FILE}} 0.0.0.0 {{SERVER_PORT}} {{MAX_PLAYERS}}",
+    "config": {
+        "files": "{}",
+        "startup": "{\r\n    \"done\": \"Started server on \"\r\n}",
+        "logs": "{}",
+        "stop": "^C"
+    },
+    "scripts": {
+        "installation": {
+            "script": "#!\/bin\/bash\r\napt update -y ; apt upgrade -y\r\napt install -y wget unzip ca-certificates\r\n\r\ncd \/tmp\r\n\r\nwget https:\/\/files.sa-mp.com\/samp037svr_R2-1.tar.gz\r\nmv samp037svr_R2-1.tar.gz samp.tar.gz\r\n\r\nmkdir -p \/mnt\/server\r\n\r\ntar -xzvf samp.tar.gz -C \/mnt\/server\/\r\ncp -r \/mnt\/server\/samp03\/* \/mnt\/server\r\nrm -rf \/mnt\/server\/samp03\/\r\n\r\ncd \/mnt\/server\r\n\r\nrm server.cfg\r\n\r\nwget https:\/\/raw.githubusercontent.com\/daniscript18\/pterodactyl\/master\/yolks\/samp\/server.cfg\r\n\r\nLINE=$(grep -n \"rcon_password\" server.cfg | sed -n -r \"s\/:(.*)\/\/p\")\r\n\r\nsed -i \"$LINE cCHANGE-ME\" server.cfg ;\r\nsed -i -r \"$LINE s|CHANGE-ME|rcon_password changemeplease|\" server.cfg",
+            "container": "ubuntu:latest",
+            "entrypoint": "bash"
+        }
+    },
+    "variables": [
+        {
+            "name": "START_FILE",
+            "description": "",
+            "env_variable": "START_FILE",
+            "default_value": ".\/samp03svr",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string",
+            "field_type": "text"
+        },
+        {
+            "name": "CONFIG_FILE",
+            "description": "",
+            "env_variable": "CONFIG_FILE",
+            "default_value": ".\/server.cfg",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string",
+            "field_type": "text"
+        },
+        {
+            "name": "MAX_PLAYERS",
+            "description": "",
+            "env_variable": "MAX_PLAYERS",
+            "default_value": "50",
+            "user_viewable": true,
+            "user_editable": false,
+            "rules": "required|numeric|max:1000",
+            "field_type": "text"
+        }
+    ]
+}
